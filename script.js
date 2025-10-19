@@ -29,12 +29,10 @@ compraForm.addEventListener('submit', function(e) {
     // Limpiar formulario
     compraForm.reset();
 });
-
-// Función para dibujar la tabla
 function dibujarTabla() {
     tablaBody.innerHTML = ''; // vaciar tabla
 
-    compras.forEach(compra => {
+    compras.forEach((compra, index) => {
         const fila = document.createElement('tr');
         fila.innerHTML = `
             <td>${compra.productor}</td>
@@ -43,10 +41,24 @@ function dibujarTabla() {
             <td>${compra.cantidad}</td>
             <td>${compra.precioUnidad.toFixed(2)}</td>
             <td>${compra.total.toFixed(2)}</td>
+            <td><button class="btn-principal btn-borrar-fila" data-index="${index}">🗑️</button></td>
         `;
         tablaBody.appendChild(fila);
     });
+
+    // --- Funcionalidad de borrar fila ---
+    const botonesBorrar = document.querySelectorAll(".btn-borrar-fila");
+    botonesBorrar.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const i = btn.getAttribute("data-index");
+            compras.splice(i, 1); // eliminar del array
+            localStorage.setItem("compras", JSON.stringify(compras)); // actualizar almacenamiento
+            dibujarTabla(); // refrescar tabla
+            actualizarTotales(); // refrescar totales
+        });
+    });
 }
+
 
 // Función para actualizar totales
 function actualizarTotales() {
@@ -145,4 +157,31 @@ document.getElementById('descargarExcel').addEventListener('click', () => {
     const ws = XLSX.utils.aoa_to_sheet(ws_data);
     XLSX.utils.book_append_sheet(wb, ws, "Compras");
     XLSX.writeFile(wb, `compras_${new Date().toISOString().slice(0,10)}.xlsx`);
+});
+// ==== BORRAR TODOS LOS DATOS ====
+document.getElementById("btnBorrarTodo").addEventListener("click", () => {
+  if (confirm("¿Seguro que querés borrar todos los datos?")) {
+    // Eliminar del almacenamiento local
+    localStorage.removeItem("compras");
+
+    // Limpiar la tabla
+    const tablaBody = document.getElementById("tablaBody");
+    tablaBody.innerHTML = "";
+
+    // Reiniciar totales en pantalla
+    document.getElementById("totalGeneral").textContent = "0";
+    document.getElementById("totalesPorProductor").innerHTML = "";
+
+    // (Si hay gráfico, lo ocultamos)
+    const graficoSection = document.getElementById("graficoSection");
+    if (graficoSection) graficoSection.style.display = "none";
+
+    alert("✅ Todos los datos fueron eliminados correctamente.");
+  }
+});
+
+
+document.getElementById("btnGuardar").addEventListener("click", () => {
+    localStorage.setItem("compras", JSON.stringify(compras));
+    alert("✅ Datos guardados correctamente.");
 });

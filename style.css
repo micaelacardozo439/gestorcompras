@@ -126,3 +126,36 @@ footer {
     border-radius: 10px;
   }
 }
+
+
+/* ==== BOTONES PRINCIPALES ==== */
+.btn-principal {
+  background-color: #40916c; /* verde principal del header */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.btn-principal:hover {
+  background-color: #1b4332; /* verde oscuro al pasar el mouse */
+}
+
+.btn-borrar {
+  background-color: #d9534f;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.btn-borrar:hover {
+  background-color: #b52b27;
+}
