@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor de Compras - Frutas y Verduras</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>🍎 Gestor de Compras y Proveedores</h1>
+</header>
+
+<main>
+  <!-- Formulario -->
+  <section>
+    <h2>Registrar Compra</h2>
+    <form id="compraForm">
+      <input type="text" id="productor" placeholder="Productor" required>
+      <input type="date" id="fecha" required>
+      <input type="text" id="producto" placeholder="Producto" required>
+      <input type="number" id="cantidad" placeholder="Cantidad" min="1" required>
+      <input type="number" id="precioUnidad" placeholder="Precio por unidad" min="0" step="0.01" required>
+      <button type="submit">Agregar Compra</button>
+    </form>
+  </section>
+
+  <!-- Tabla de compras -->
+  <section>
+    <h2>📋 Historial de Compras</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Productor</th>
+          <th>Fecha</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio Unidad ($)</th>
+          <th>Total ($)</th>
+        </tr>
+      </thead>
+      <tbody id="tablaBody"></tbody>
+    </table>
+    <div class="resumen">
+      <p><strong>Total general: $<span id="totalGeneral">0</span></strong></p>
+      <div id="totalesPorProductor"></div>
+    </div>
+  </section>
+
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+<button id="descargarExcel">💾 Descargar Excel</button>
+
+
+  <!-- Botón para mostrar gráfico -->
+<section>
+  <button id="verGraficoBtn">📊 Ver gráfico de compras por productor</button>
+</section>
+
+<section id="graficoContainer" style="display:none;">
+  <h2>📊 Total comprado por productor</h2>
+  <canvas id="graficoProductores"></canvas>
+  <button id="cerrarGraficoBtn">Cerrar gráfico</button>
+</section>
+
+
+</main>
+
+<footer>
+  <p>Desarrollado por Micaela 💚</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
